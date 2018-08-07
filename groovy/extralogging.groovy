@@ -1,32 +1,16 @@
-///////////////////////////////////////////////////////////////////////////////
-// Put any additional logging setup configuration in here
-///////////////////////////////////////////////////////////////////////////////
-
-//import java.util.logging.Logger
-//import java.util.logging.ConsoleHandler
-import java.util.logging.LogManager
+/**
+ * Put any additional logging setup configuration in here
+ */
 import java.util.logging.Level
+import java.util.logging.LogManager
+import java.util.logging.Logger
 
-private log(String msg) {
-    log_info(msg)
-}
+/**
+ * Setup the logger
+ */
+Logger logger = Logger.getLogger("extralogging.groovy")
 
-private log_debug(String msg) {
-    def now = new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-    println(sprintf("[%s][DEBUG] %s", [now, msg]))
-}
-
-private log_info(String msg) {
-    def now = new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-    println(sprintf("[%s][INFO] %s", [now, msg]))
-}
-
-private log_warn(String msg) {
-    def now = new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-    println(sprintf("[%s][WARN] %s", [now, msg]))
-}
-
-log("Running extralogging.groovy")
+logger.log(Level.INFO, "Running extralogging.groovy")
 
 ///////////////////////////////////////////////////////////////////////////////
 // NodePool Plugin Logger Setup
@@ -126,33 +110,29 @@ log("Running extralogging.groovy")
 //LogManager.getLogManager().getLoggerNames().toList().sort().each {
 //    loggerName -> log(sprintf("  Logger: %s", loggerName))
 //}
-log("Rackspace Loggers:")
+logger.log(Level.INFO, "Rackspace Loggers:")
 LogManager.getLogManager().getLoggerNames().toList().findAll { name -> name.startsWith("com.rackspace") }.sort().each {
     loggerName ->
-        log(sprintf("  Logger Name: %s, Level: %s", loggerName,
-                LogManager.getLogManager().getLogger(loggerName).getLevel()))
-
-        log(sprintf("  Setting level to: %s", Level.ALL))
+        logger.log(Level.INFO, sprintf("  Logger Name: %s, Level: %s", loggerName, LogManager.getLogManager().getLogger(loggerName).getLevel()))
+        logger.log(Level.INFO, sprintf("  Setting level to: %s", Level.ALL))
         LogManager.getLogManager().getLogger(loggerName).setLevel(Level.ALL)
 
-        log(sprintf("  Logger Name: %s, Level: %s", loggerName,
-                LogManager.getLogManager().getLogger(loggerName).getLevel()))
-
-        log(sprintf("  Reviewing handlers for Logger Name: %s", loggerName))
+        logger.log(Level.INFO, sprintf("  Logger Name: %s, Level: %s", loggerName, LogManager.getLogManager().getLogger(loggerName).getLevel()))
+        logger.log(Level.INFO, sprintf("  Reviewing handlers for Logger Name: %s", loggerName))
         LogManager.getLogManager().getLogger(loggerName).getHandlers().each {
             handler ->
-                log(sprintf("    Discovered logger: %s with handler: %s...", loggerName, handler))
+                logger.log(sprintf("    Discovered logger: %s with handler: %s...", loggerName, handler))
                 //log(sprintf("    Setting log level to: %s on logger: %s with handler: %s", Level.ALL, loggerName, handler))
                 //handler.setLevel(Level.ALL)
         }
 }
 
-log(sprintf("Reviewing Parent Loggers of com.rackspace..."))
+logger.log(Level.INFO, sprintf("Reviewing Parent Loggers of com.rackspace..."))
 LogManager.getLogManager().getLoggerNames().toList().findAll { name -> name.startsWith("com.rackspace") }.sort().each {
     loggerName ->
         parent = LogManager.getLogManager().getLogger(loggerName).getParent()
 
-        log(sprintf("  Discovered parent logger %s with level: %s", parent.getName(), parent.getLevel()))
+        logger.log(Level.INFO, sprintf("  Discovered parent logger %s with level: %s", parent.getName(), parent.getLevel()))
         //log(sprintf("  Parent logger %s level to: %s", parent.getName(), parent.getLevel()))
 
         //log(sprintf("  Setting parent logger %s level to: %s", parent.getName(), Level.ALL))
@@ -160,10 +140,10 @@ LogManager.getLogManager().getLoggerNames().toList().findAll { name -> name.star
 
         //log(sprintf("  Parent logger %s level set to: %s", parent.getName(), parent.getLevel()))
 
-        log(sprintf("  Reviewing handlers for parent logger Name: %s", loggerName))
+        logger.log(Level.INFO, sprintf("  Reviewing handlers for parent logger Name: %s", loggerName))
         LogManager.getLogManager().getLogger(loggerName).getParent().getHandlers().each {
             handler ->
-                log(sprintf("    Discovered parent logger: %s with handler: %s with handler level: %s", parent, handler, handler.getLevel()))
+                logger.log(Level.INFO, sprintf("    Discovered parent logger: %s with handler: %s with handler level: %s", parent, handler, handler.getLevel()))
                 //log(sprintf("    Setting log level to: %s on parent logger: %s with handler: %s", Level.ALL, loggerName, handler))
                 handler.setLevel(Level.ALL)
         }

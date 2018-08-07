@@ -11,8 +11,9 @@ USER root
 RUN apk add --no-cache vim
 
 USER jenkins
-COPY groovy/*.groovy /usr/share/jenkins/ref/init.groovy.d/
 COPY plugins/plugins.txt /usr/share/jenkins/ref/
 RUN /usr/local/bin/plugins.sh /usr/share/jenkins/ref/plugins.txt
+COPY groovy/*.groovy /usr/share/jenkins/ref/init.groovy.d/
 
 EXPOSE 8080/tcp
+EXPOSE 50000/tcp

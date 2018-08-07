@@ -1,6 +1,18 @@
 #!/usr/bin/env bash
 
-set -o pipefail
+###############################################################################
+# Script options
+#
+# Reference: http://redsymbol.net/articles/unofficial-bash-strict-mode/
+###############################################################################
+set -e # exit on error
+set -o pipefail # exit on pipe fails
+set -u # fail on unset
+#set -x # activate debugging from here down
+#set +x # disable debugging from here down
+# First set bash option to avoid
+# unmatched patterns expand as result values
+#shopt -s nullglob
 
 ###############################################################################
 # A couple of custom color definitions and logger functions.
@@ -24,6 +36,9 @@ else
     exit 1
 fi
 
+###############################################################################
+# Make sure the plugins file exists and we can load it
+###############################################################################
 declare -r plugin_file="plugins/plugins.txt"
 #declare -r plugin_file="plugins/plugins-test.txt"
 if [[ -f ${plugin_file} ]]; then

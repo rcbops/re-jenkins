@@ -1,32 +1,22 @@
 /*
  * Set the number of executors available on the master
  */
-
 import jenkins.model.*
-import java.util.logging.LogManager
 import java.util.logging.Level
+import java.util.logging.Logger
 
-private log(String msg) {
-    log_info(msg)
-}
+/**
+ * Setup the logger
+ */
+Logger logger = Logger.getLogger("executors.groovy")
 
-date_time_format="yyyy-MM-dd'T'HH:mm:ssZ"
+logger.log(Level.INFO, "Running executors.groovy...")
+def instance = Jenkins.getInstance()
 
-private log_debug(String msg) {
-    def now = new Date().format(date_time_format)
-    println(sprintf("[%s][DEBUG] %s", [now, msg]))
-}
+java.lang.Integer num_executors = 3
+logger.log(Level.INFO, String.format("Setting executors to: %d", num_executors))
+instance.setNumExecutors(num_executors)
 
-private log_info(String msg) {
-    def now = new Date().format(date_time_format)
-    println(sprintf("[%s][INFO] %s", [now, msg]))
-}
-
-private log_warn(String msg) {
-    def now = new Date().format(date_time_format)
-    println(sprintf("[%s][WARN] %s", [now, msg]))
-}
-
-num_executors = 2
-log("Setting executors to: " + num_executors)
-Jenkins.instance.setNumExecutors(num_executors)
+java.lang.Integer slave_agent_port = 55000
+logger.log(Level.INFO, String.format("Setting slave agent port to: %d", slave_agent_port))
+instance.setSlaveAgentPort([slave_agent_port])

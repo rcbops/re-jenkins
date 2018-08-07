@@ -8,7 +8,9 @@ our favorite plugins with some startup configuration.
 To build and run Jenkins for Release Engineering, the following software
 packages must be installed.
 
-* Docker
+* `docker` - to build, publish and deploy Jenkins
+* `bash` - to run the helper scripts
+* `wget` - to test/validate remote plugins
 
 ## Version Info
 
