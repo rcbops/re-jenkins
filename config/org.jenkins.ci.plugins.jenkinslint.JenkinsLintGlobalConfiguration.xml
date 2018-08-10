@@ -1,0 +1,34 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<org.jenkins.ci.plugins.jenkinslint.JenkinsLintGlobalConfiguration plugin="jenkinslint@0.14.0">
+  <globalEnabled>true</globalEnabled>
+  <jobActionEnabled>true</jobActionEnabled>
+  <lintDisabledJobEnabled>true</lintDisabledJobEnabled>
+  <artifactCheckerEnabled>true</artifactCheckerEnabled>
+  <bfaCheckerEnabled>true</bfaCheckerEnabled>
+  <cleanupWorkspaceCheckerEnabled>true</cleanupWorkspaceCheckerEnabled>
+  <gitRefCheckerEnabled>true</gitRefCheckerEnabled>
+  <gitRefSubmoduleCheckerEnabled>true</gitRefSubmoduleCheckerEnabled>
+  <gitShallowCheckerEnabled>true</gitShallowCheckerEnabled>
+  <gradleWrapperCheckerEnabled>true</gradleWrapperCheckerEnabled>
+  <groovySystemExitCheckerEnabled>true</groovySystemExitCheckerEnabled>
+  <hardcodedScriptCheckerEnabled>true</hardcodedScriptCheckerEnabled>
+  <javadocCheckerEnabled>true</javadocCheckerEnabled>
+  <jobAssignedLabelCheckerEnabled>true</jobAssignedLabelCheckerEnabled>
+  <jobDescriptionCheckerEnabled>true</jobDescriptionCheckerEnabled>
+  <jobLogRotatorCheckerEnabled>true</jobLogRotatorCheckerEnabled>
+  <jobNameCheckerEnabled>true</jobNameCheckerEnabled>
+  <masterLabelCheckerEnabled>true</masterLabelCheckerEnabled>
+  <mavenJobTypeCheckerEnabled>true</mavenJobTypeCheckerEnabled>
+  <multibranchJobTypeCheckerEnabled>true</multibranchJobTypeCheckerEnabled>
+  <nullSCMCheckerEnabled>true</nullSCMCheckerEnabled>
+  <pollingSCMTriggerCheckerEnabled>true</pollingSCMTriggerCheckerEnabled>
+  <slaveDescriptionCheckerEnabled>true</slaveDescriptionCheckerEnabled>
+  <slaveLabelCheckerEnabled>true</slaveLabelCheckerEnabled>
+  <slaveVersionCheckerEnabled>true</slaveVersionCheckerEnabled>
+  <timeoutCheckerEnabled>true</timeoutCheckerEnabled>
+  <timerTriggerCheckerEnabled>true</timerTriggerCheckerEnabled>
+  <windowsSlaveLaunchCheckerEnabled>true</windowsSlaveLaunchCheckerEnabled>
+  <groovySandboxCheckerEnabled>true</groovySandboxCheckerEnabled>
+  <hardcodedScriptThreshold>2</hardcodedScriptThreshold>
+  <hardcodedScriptIgnoredComment>false</hardcodedScriptIgnoredComment>
+</org.jenkins.ci.plugins.jenkinslint.JenkinsLintGlobalConfiguration>

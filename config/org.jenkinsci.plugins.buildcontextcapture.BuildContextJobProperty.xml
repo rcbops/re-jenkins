@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<org.jenkinsci.plugins.buildcontextcapture.BuildContextJobProperty_-BuildContextJobPropertyDescriptor plugin="buildcontext-capture@0.6">
+  <format>TXT</format>
+</org.jenkinsci.plugins.buildcontextcapture.BuildContextJobProperty_-BuildContextJobPropertyDescriptor>

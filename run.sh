@@ -48,8 +48,8 @@ fi
 
 # Create a Jenkins work folder and place the logging.properties file there
 mkdir -p work/.ssh
-cp ~/.ssh//openstack_* work/.ssh/
-cp config/logging.properties work/
+cp ~/.ssh/openstack_* work/.ssh/
+#cp config/logging.properties work/
 
 declare -r container_name="jenkins-master"
 
@@ -63,6 +63,6 @@ docker run \
     -p 8080:8080 \
     -p 50000:50000 \
     --env JENKINS_ARGS="--prefix=/jenkins" \
-    --env JAVA_OPTS='-Dhudson.footerURL=http://www.rackspace.com -Djava.awt.headless=true -Djava.util.logging.config.file=/var/jenkins_home/logging.properties -Djava.util.logging.SimpleFormatter.format="[%1$tY-%1$tm-%1$tdT%1$tH:%1$tM:%1$tS%tz][%4$s] %2$s %5$s%6$s%n"' \
+    --env JAVA_OPTS="-Dhudson.footerURL=http://www.rackspace.com -Djava.awt.headless=true -Djava.util.logging.config.file=/var/jenkins_home/logging.properties" \
     -v `pwd`/work:/var/jenkins_home \
     ${tag}

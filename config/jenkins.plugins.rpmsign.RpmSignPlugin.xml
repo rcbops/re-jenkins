@@ -1,0 +1,4 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<jenkins.plugins.rpmsign.RpmSignPlugin_-GpgSignerDescriptor plugin="rpmsign-plugin@0.4.6">
+  <gpgKeys/>
+</jenkins.plugins.rpmsign.RpmSignPlugin_-GpgSignerDescriptor>

@@ -1,0 +1,37 @@
+# Default values for replatform.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  context: re
+  imageRegistry: "registry.hub.docker.com"
+
+jenkins:
+  name: "jenkins-master"
+  image: "dealako/re-jenkins"
+  imageVersion: "0.0.1"
+  pullPolicy: "Always"
+  replicas: 1
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "2Gi"
+    limits:
+      cpu: "500m"
+      memory: "2Gi"
+  network:
+    port: "8080"
+    protocol: "http"
+    targetPort: "8080"
+    status:
+      probeDelaySeconds: 600
+      probeTimeoutSeconds: 60
+  env:
+    jenkinsArgs: "--prefix=/jenkins"
+    javaOpts: "-Dhudson.footerURL=\"http://www.rackspace.com\" -Djava.awt.headless=true -Djava.util.logging.config.file=\"/var/jenkins_home/logging.properties\""
+  persistence:
+    enabled: true
+    storageClass: "fast-data-volume"
+    size: "5Gi"
+    dir: "/var/jenkins_home"
+

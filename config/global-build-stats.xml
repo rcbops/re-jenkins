@@ -1,0 +1,42 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<hudson.plugins.global__build__stats.GlobalBuildStatsPlugin version="9">
+  <buildStatConfigs>
+    <bsc plugin="global-build-stats@1.5">
+      <id>lInsGHFdjR9ItJgJ0IhvXYJcFtSG0@YJ</id>
+      <t>AIO Build Time</t>
+      <w>1000</w>
+      <h>350</h>
+      <l>2</l>
+      <s>WEEKLY_FROM_NOW</s>
+      <yact>COUNT</yact>
+      <ds>
+        <GBS__YACD>BUILD_AVERAGE_DURATION</GBS__YACD>
+      </ds>
+      <f>
+        <jf>fieldRegex(.*AIO.*)</jf>
+        <nf>ALL</nf>
+        <lf>ALL</lf>
+        <sbr>15</sbr>
+      </f>
+    </bsc>
+    <bsc plugin="global-build-stats@1.5">
+      <id>PUidYlGRZKr5yojs7bf!MSSVYodRZeEy</id>
+      <t>Periodic Status</t>
+      <w>1000</w>
+      <h>350</h>
+      <l>2</l>
+      <s>WEEKLY_FROM_NOW</s>
+      <yact>COUNT</yact>
+      <ds>
+        <GBS__YACD>BUILD_COUNTER</GBS__YACD>
+      </ds>
+      <f>
+        <jf>fieldRegex(.*periodic.*)</jf>
+        <nf>ALL</nf>
+        <lf>ALL</lf>
+        <sbr>15</sbr>
+      </f>
+    </bsc>
+  </buildStatConfigs>
+  <retentionStrategies/>
+</hudson.plugins.global__build__stats.GlobalBuildStatsPlugin>

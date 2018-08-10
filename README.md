@@ -1,22 +1,22 @@
 # Jenkins for Release Engineering
 
-This is a Jenkins build for the RS release engineering team. It includes all of
-our favorite plugins with some startup configuration.
+This is a Jenkins Docker build for the RS release engineering team. It includes all of our favorite plugins with some
+startup configuration. This repository also includes the Helm chart and templates to deploy Jenkins into a Kubernetes
+cluster.
 
 ## Dependencies
 
-To build and run Jenkins for Release Engineering, the following software
-packages must be installed.
+To build and run Jenkins for Release Engineering, the following software packages must be installed.
 
 * `docker` - to build, publish and deploy Jenkins
+* `helm` - to deploy to kubernetes
 * `bash` - to run the helper scripts
 * `wget` - to test/validate remote plugins
 
 ## Version Info
 
-The docker tag/version information is in a single `docker-tag.txt` file. This
-file is loaded by the helper scripts to build, publish, and run the docker
-image.
+The docker tag/version information is in a single `docker-tag.txt` file. This file is loaded by the helper scripts to
+build, publish, and run the docker image.
 
 ## Validating Plugins
 
@@ -61,7 +61,7 @@ the `run.sh` script:
 ./run.sh
 ```
 
-## Extracting Existing Plugings
+## Extracting Existing Plugins
 
 The Dockerfile leverages the `plugins/plugins.txt` file to determine which
 plugins to load into the Jenkins server at docker image build time. Simply
@@ -83,5 +83,10 @@ It will show which plugins require updates (and the associated versions).
 
 ## CI/CD
 
-A placeholder `Jenkinsfile` was added to this repostiory. We'll update it soon
+A placeholder `Jenkinsfile` was added to this repository. We'll update it soon
 so that future releases of the Jenkins master will be driven by code changes.
+
+## TODO
+
+* Upgrade Jenkins from version 2.107.1 to version 2.121.2
+* Setup security
