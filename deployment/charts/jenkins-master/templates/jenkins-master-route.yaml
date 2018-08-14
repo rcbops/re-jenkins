@@ -1,0 +1,18 @@
+apiVersion: openshift.org/v1
+kind: Route
+metadata:
+  name: {{.Values.jenkins.name}}-route
+  labels:
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+spec:
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: {{ .Values.jenkins.name |quote}}
+    weight: 1
+  host: null
+status:
+  ingress: []
