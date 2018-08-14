@@ -1,0 +1,10 @@
+---
+apiVersion: v1.ImageStream
+kind: ImageStream
+metadata:
+  name: "{{ .Values.jenkins.name}}-image-stream"
+  labels:
+    - jenkins
+    - master
+spec:
+  dockerImageRepository: {{.Values.jenkins.image |quote }}

@@ -1,15 +1,29 @@
 pipeline {
     agent any
-
     stages {
-        stage('Build Docker Image') {
+        stage('Checkout'){
             steps {
-                sh "sudo docker build -t github.com/rcbops/re-jenkins:0.0.1 ."
+                checkout scm
             }
         }
-        stage('Publich Docker Image') {
+        stage('Build Docker Image') {
             steps {
-                sh "sudo docker push github.com/rcbops/re-jenkins:0.0.1"
+                sh "./build-image.sh"
+            }
+        }
+        stage('Publish Docker Image') {
+            environment {
+                // creates DOCKER_HUB_CREDENTIALS_USR
+                // and DOCKER_HUB_CREDENTIALS_PSW
+                DOCKER_HUB_CREDENTIALS=credentials('dockerhubrpcjirasvc')
+                version="0.0.2"
+            }
+            steps {
+                sh """
+                    # --password-stdin not available on long running slaves.
+                    docker login -p "${DOCKER_HUB_CREDENTIALS_PSW}" -u "${DOCKER_HUB_CREDENTIALS_USR}"
+                    ./publish-image.sh
+                """
             }
         }
     }

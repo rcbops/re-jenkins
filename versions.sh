@@ -7,7 +7,7 @@
 #declare -r JENKINS_SHA=6d9330c14c5b32c57b37e3b3a9743fd74bedcab0019ae10e2f2c3ca121acf743
 
 # The docker tag details
-declare -r owner="dealako"
-declare -r project="re-jenkins"
-declare -r version="0.0.2"
+declare -r owner="${owner:-rcbops}"
+declare -r project="${project:-re-jenkins}"
+declare -r version="${version:-0.0.2}"
 declare -r tag="${owner}/${project}:${version}"
