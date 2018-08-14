@@ -47,4 +47,7 @@ else
 fi
 
 log "Publishing image with tag: ${_Y}${tag}${_W}..."
-docker push "${tag}"
+docker push "${owner}/${project}:${version}"
+
+log "Publishing image with tag: ${_Y}latest${_W}..."
+docker push "${owner}/${project}:latest"
