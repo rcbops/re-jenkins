@@ -47,6 +47,7 @@ else
 fi
 
 log "Building Jenkins image with tag: ${_Y}${tag}${_W}..."
-docker build \
-  -t="${tag}" \
-  .
+docker build -t="${owner}/${project}:${version}" .
+
+log "Building Jenkins image with tag: ${_Y}latest${_W}..."
+docker build -t="${owner}/${project}:latest" .
