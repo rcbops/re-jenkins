@@ -39,12 +39,14 @@ fi
 ###############################################################################
 # Load the docker tag and version info
 ###############################################################################
-declare -r docker_tag_file="docker-tag.txt"
+declare -r docker_tag_file="versions.sh"
 if [[ -f ${docker_tag_file} ]]; then
     source ${docker_tag_file}
 else
     die "Unable to read ${_Y}${docker_tag_file}{$_W} file."
 fi
 
-log "Building image with tag: ${_Y}${tag}${_W}..."
-docker build -t="${tag}" .
+log "Building Jenkins image with tag: ${_Y}${tag}${_W}..."
+docker build \
+  -t="${tag}" \
+  .

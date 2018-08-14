@@ -9,7 +9,7 @@ global:
 jenkins:
   name: "jenkins-master"
   image: "dealako/re-jenkins"
-  imageVersion: "0.0.1"
+  imageVersion: "0.0.2"
   pullPolicy: "Always"
   replicas: 1
   resources:
@@ -34,4 +34,14 @@ jenkins:
     storageClass: "fast-data-volume"
     size: "5Gi"
     dir: "/var/jenkins_home"
+  plugin:
+    configDir: "/usr/share/jenkins/ref/"
+    github:
+      server:
+        apiUrl: "https://api.github.com"
+        manageHooks: "false"
+        credentialsId: "75b4bd1e-8c05-46b6-ab72-5506f128c56e"
+        clientCacheSize: 20
+      hookSecretConfig:
+        credentialsId: "github_webhook_shared_secret"
 

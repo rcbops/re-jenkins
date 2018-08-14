@@ -15,7 +15,7 @@ To build and run Jenkins for Release Engineering, the following software package
 
 ## Version Info
 
-The docker tag/version information is in a single `docker-tag.txt` file. This file is loaded by the helper scripts to
+The docker tag/version information is in a single `versions.sh` file. This file is loaded by the helper scripts to
 build, publish, and run the docker image.
 
 ## Validating Plugins
@@ -27,6 +27,11 @@ Jenkins Plugin Update Center server, you can simply run the
 `validate-plugin-exists.sh` script. This is handy if you simply want to
 validate that the plugin name and version number exist and are valid. It may
 save some time if you are adding/shuffling around plugins.
+
+## Docker Image
+
+The Release Engineering team Jenkins image is based on the 
+[official Jenkins image](https://github.com/jenkinsci/docker/blob/master/Dockerfile-alpine) which is based on Alpine OS.
 
 ## Manual Image Building
 
@@ -60,6 +65,39 @@ the `run.sh` script:
 ```bash
 ./run.sh
 ```
+
+## Deploy Image to OpenShift
+
+For OpenShift, it seems you need to specify an Image Stream to load images from external sources.  To create the Image
+Stream, [log into the OpenShift Console](https://rsi.rackspace.net/console) then from the menu, select 
+"Add To Project" -> "Deploy Image". Select the Image Name radio button and fill out the remote image tag details, such
+as `dealako/re-jenkins:0.0.2`. Press the search button beside the image name to fetch the meta-data.  Review the meta-
+data, add any environment variables, add any other labels or tags, and press "Create".
+
+## Deploying to OpenShift
+
+To deploy the helm chart to OpenShift:
+
+```bash
+# Setup
+export TILLER_NAMESPACE=rpc-re
+cd deployment/charts/jenkins-master
+# Test
+helm lint
+helm install --debug --namespace rpc-re --name jenkins-master --dry-run .
+# Deploy
+helm install --debug --namespace rpc-re --name jenkins-master .
+```
+
+Review the resources in the console or run a watch on the OpenShift resources, such as:
+
+```bash
+watch -n 5 -c "oc get po,ds,deploy,hpa,ing,statefulsets,jobs,configmap,rs,rc,svc,pv,pvc -o wide --namespace rpc-re"
+```
+
+## OpenShift Route
+
+TODO: add notes
 
 ## Extracting Existing Plugins
 

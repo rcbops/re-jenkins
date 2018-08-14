@@ -1,5 +1,4 @@
-#FROM jenkins:2.60.3-alpine
-FROM jenkinsci/blueocean
+FROM jenkins/jenkins:2.137-alpine
 
 LABEL vendor="Rackspace Inc." \
       vendor.url="http://www.rackspace.com/" \
@@ -9,7 +8,7 @@ LABEL vendor="Rackspace Inc." \
 # Install a few tools
 USER root
 RUN apk --no-cache upgrade && \
-  apk add --no-cache bash zsh vim curl wget bind-tools openssl git jq file diffutils nmap python3 gnupg tar gzip && \
+  apk add --no-cache bash zsh vim curl wget bind-tools openssl git jq file diffutils nmap python3 gnupg tar gzip docker && \
   ln -s /usr/bin/python3 /usr/bin/python && \
   python3 -m ensurepip --upgrade && \
   rm -r /usr/lib/python*/ensurepip && \

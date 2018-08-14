@@ -39,7 +39,7 @@ fi
 ###############################################################################
 # Load the docker tag and version info
 ###############################################################################
-declare -r docker_tag_file="docker-tag.txt"
+declare -r docker_tag_file="versions.sh"
 if [[ -f ${docker_tag_file} ]]; then
     source ${docker_tag_file}
 else

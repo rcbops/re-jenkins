@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-declare -r owner="dealako"
-declare -r project="re-jenkins"
-declare -r version="0.0.1"
-declare -r tag="${owner}/${project}:${version}"
