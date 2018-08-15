@@ -1,0 +1,16 @@
+{{- if .Values.jenkins.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "{{ .Values.jenkins.name }}-vol"
+  labels:
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+     storage: {{ .Values.jenkins.persistence.size }}
+{{- end }}
+# https://github.rackspace.com/tesla/charts/blob/master/base/jenkins-base/templates/volume.yaml

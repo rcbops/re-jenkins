@@ -8,6 +8,7 @@ metadata:
     context: {{ .Values.global.context | quote }}
     chart: {{ .Chart.Name | quote }}
     version: {{ .Chart.Version | replace "+" "_" | trunc 63  | quote }}
+    release: {{ .Release.Name }}
 spec:
   type: NodePort
   selector:

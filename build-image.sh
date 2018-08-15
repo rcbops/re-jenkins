@@ -46,8 +46,10 @@ else
     die "Unable to read ${_Y}${docker_tag_file}{$_W} file."
 fi
 
-log "Building Jenkins image with tag: ${_Y}${registry}/${namespace}/${project}:${version}${_W}..."
-docker build -t="${registry}/${namespace}/${project}:${version}" .
+tag="${registry}/${namespace}/${project}"
 
-log "Building Jenkins image with tag: ${_Y}{registry}/${namespace}/${project}:latest${_W}..."
-docker build -t="${registry}/${namespace}/${project}:latest" .
+log "Building Jenkins image with tag: ${_Y}${tag}:${version}${_W}..."
+docker build -t="${tag}:${version}" .
+
+log "Adding latest tag: ${_Y}${tag}:latest${_W}..."
+docker tag ${tag}:${version} ${tag}:latest

@@ -8,6 +8,7 @@ metadata:
     context: {{ .Values.global.context | quote }}
     chart: {{ .Chart.Name | quote }}
     version: {{ .Chart.Version | replace "+" "_" | trunc 63  | quote }}
+    release: {{ .Release.Name }}
 spec:
   serviceName: {{ default "jenkins-master" .Values.jenkins.name | quote }}
   replicas: {{ default 1 .Values.jenkins.replicas }}
@@ -46,19 +47,11 @@ spec:
               cpu: {{ .Values.jenkins.resources.limits.cpu | quote }}
               memory: {{ .Values.jenkins.resources.limits.memory | quote }}
           volumeMounts:
-            #- name: "{{ .Values.jenkins.name }}-vol"
-            #  mountPath: {{ .Values.jenkins.persistence.dir | quote }}
+            - name: "{{ .Values.jenkins.name }}-vol"
+              mountPath: {{ .Values.jenkins.persistence.dir | quote }}
             - name: "{{ .Values.jenkins.name }}-vol-config"
               mountPath: {{ .Values.jenkins.plugin.configDir | quote }}
       volumes:
         - name: "{{ .Values.jenkins.name }}-vol-config"
           configMap:
             name: "{{ .Values.jenkins.name }}-configmap"
-#  volumeClaimTemplates:
-#  - metadata:
-#      name: "{{ .Values.jenkins.name }}-vol"
-#    spec:
-#      accessModes: [ "ReadWriteOnce" ]
-#      resources:
-#        requests:
-#          storage: {{ default "5Gi" .Values.jenkins.persistence.size | quote }}

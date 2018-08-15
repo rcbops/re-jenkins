@@ -11,5 +11,6 @@ metadata:
     context: {{ .Values.global.context | quote }}
     chart: {{ .Chart.Name | quote }}
     version: {{ .Chart.Version | replace "+" "_" | trunc 63 | quote }}
+    release: {{ .Release.Name }}
 spec:
   dockerImageRepository: "{{ .Values.global.imageRegistry }}/{{ .Values.global.namespace }}/{{ .Values.jenkins.image }}"

@@ -30,3 +30,6 @@ hs_err_pid*
 .classpath
 .settings/
 .history/
+
+# only the encrypted version should be committed
+deployment/charts/jenkins-master/secrets.yaml
