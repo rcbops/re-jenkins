@@ -18,6 +18,7 @@ function log_warn() {
 }
 
 function log_debug() {
+  declare -r date_format='%Y-%m-%dT%T%z'
   if [ ${debug_enabled} -ne 0 ]; then
     echo -e "${_W}[${_N}${_Y}`date +${date_format}`${_N}${_W}][${_N}${_BLUE}DEBUG${_N}${_W}]${_N} ${_W}$@${_N}"
   fi
