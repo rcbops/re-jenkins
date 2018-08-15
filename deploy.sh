@@ -27,6 +27,7 @@ NAMESPACE="rpc-re"
 export TILLER_NAMESPACE="tesla-staging"
 HELM_OPTS="--debug \
     --tiller-namespace ${TILLER_NAMESPACE} \
+    --name jenkins-master \
     --namespace ${NAMESPACE} \
     -f ${CHART_DIR}/values.yaml \
     -f ${CHART_DIR}/secrets.yaml"
