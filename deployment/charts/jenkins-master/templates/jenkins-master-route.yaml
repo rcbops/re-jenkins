@@ -1,18 +1,23 @@
-apiVersion: openshift.org/v1
+---
+apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: {{.Values.jenkins.name}}-route
+  name: {{ .Values.jenkins.name | quote }}
   labels:
-    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
-    release: {{ .Release.Name }}
+    component: {{ .Values.jenkins.name | quote }}
+    context: {{ .Values.global.context | quote }}
+    chart: {{ .Chart.Name | quote }}
+    version: {{ .Chart.Version | replace "+" "_" | trunc 63  | quote }}
+    expose: "public"
 spec:
+  host: "{{ .Values.jenkins.name }}.devapps.rsi.rackspace.net"
+  path: "/"
   tls:
     insecureEdgeTerminationPolicy: Redirect
     termination: edge
   to:
     kind: Service
-    name: {{ .Values.jenkins.name |quote}}
+    name: {{ .Values.jenkins.name | quote }}
     weight: 1
-  host: null
 status:
   ingress: []

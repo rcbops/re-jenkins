@@ -1,10 +1,15 @@
 ---
-apiVersion: v1.ImageStream
+apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  name: "{{ .Values.jenkins.name}}-image-stream"
+  name: {{ .Values.jenkins.name | quote }}
+  annotations:
+    description: >-
+      Keeps track of the '{{ .Values.jenkins.image }}' image changes for the '{{ .Values.jenkins.name }}' application
   labels:
-    - jenkins
-    - master
+    component: {{ .Values.jenkins.name | quote }}
+    context: {{ .Values.global.context | quote }}
+    chart: {{ .Chart.Name | quote }}
+    version: {{ .Chart.Version | replace "+" "_" | trunc 63 | quote }}
 spec:
-  dockerImageRepository: {{.Values.jenkins.image |quote }}
+  dockerImageRepository: "{{ .Values.global.imageRegistry }}/{{ .Values.global.namespace }}/{{ .Values.jenkins.image }}"

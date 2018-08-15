@@ -46,8 +46,8 @@ else
     die "Unable to read ${_Y}${docker_tag_file}{$_W} file."
 fi
 
-log "Publishing image with tag: ${_Y}${tag}${_W}..."
-docker push "${owner}/${project}:${version}"
+log "Publishing image with tag: ${_Y}${registry}/${namespace}/${project}:${version}${_W}..."
+docker push "${registry}/${namespace}/${project}:${version}"
 
-log "Publishing image with tag: ${_Y}latest${_W}..."
-docker push "${owner}/${project}:latest"
+log "Publishing image with tag: ${_Y}{registry}/${namespace}/${project}:latest${_W}..."
+docker push "${registry}/${namespace}/${project}:latest"

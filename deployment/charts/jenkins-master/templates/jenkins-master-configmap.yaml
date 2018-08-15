@@ -24,3 +24,9 @@ data:
         <credentialsId>{{ .Values.jenkins.plugin.github.hookSecretConfig.credentialsId }}</credentialsId>
       </hookSecretConfig>
     </github-plugin-configuration>
+  jenkins.model.JenkinsLocationConfiguration.xml: |-
+    <?xml version='1.1' encoding='UTF-8'?>
+    <jenkins.model.JenkinsLocationConfiguration>
+      <adminAddress>{{ .Values.jenkins.plugin.jenkinsLocation.adminAddress }}</adminAddress>
+      <jenkinsUrl>{{ .Values.jenkins.plugin.jenkinsLocation.jenkinsUrl }}</jenkinsUrl>
+    </jenkins.model.JenkinsLocationConfiguration>

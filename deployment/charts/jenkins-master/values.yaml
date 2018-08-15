@@ -4,31 +4,42 @@
 
 global:
   context: re
-  imageRegistry: "registry.hub.docker.com"
+  namespace: rpc-re
+  #imageRegistry: "registry.hub.docker.com"
+  imageRegistry: "docker-registry-default.devapps.rsi.rackspace.net"
+  imageRegistryInternal: "docker-registry.default.svc:5000"
 
 jenkins:
   name: "jenkins-master"
-  image: "dealako/re-jenkins"
-  imageVersion: "0.0.2"
+  image: "re-jenkins"
+  imageVersion: "0.0.3"
   pullPolicy: "Always"
   replicas: 1
   resources:
     requests:
       cpu: "100m"
-      memory: "2Gi"
+      memory: "4Gi"
     limits:
       cpu: "500m"
-      memory: "2Gi"
+      memory: "4Gi"
   network:
-    port: "8080"
-    protocol: "http"
-    targetPort: "8080"
-    status:
-      probeDelaySeconds: 600
-      probeTimeoutSeconds: 60
+    web:
+      port: "8080"
+      protocol: "tcp"
+      targetPort: "8080"
+      status:
+        probeDelaySeconds: 600
+        probeTimeoutSeconds: 60
+    slave:
+      port: "50000"
+      protocol: "tcp"
+      targetPort: "50000"
+      status:
+        probeDelaySeconds: 600
+        probeTimeoutSeconds: 60
   env:
     jenkinsArgs: "--prefix=/jenkins"
-    javaOpts: "-Dhudson.footerURL=\"http://www.rackspace.com\" -Djava.awt.headless=true -Djava.util.logging.config.file=\"/var/jenkins_home/logging.properties\""
+    javaOpts: "-Xmx2g -Xmx2g -Dhudson.footerURL=\"http://www.rackspace.com\" -Djava.awt.headless=true -Djava.util.logging.config.file=\"/var/jenkins_home/logging.properties\""
   persistence:
     enabled: true
     storageClass: "fast-data-volume"
@@ -36,6 +47,9 @@ jenkins:
     dir: "/var/jenkins_home"
   plugin:
     configDir: "/usr/share/jenkins/ref/"
+    jenkinsLocation:
+      adminAddress: "david.deal@rackspace.com"
+      jenkinsUrl: "https://rpc.jenkins.cit.rackspace.net/"
     github:
       server:
         apiUrl: "https://api.github.com"
