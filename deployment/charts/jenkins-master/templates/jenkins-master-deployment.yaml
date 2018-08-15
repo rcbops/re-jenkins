@@ -55,5 +55,15 @@ spec:
         - name: "{{ .Values.jenkins.name }}-vol-config"
           configMap:
             name: "{{ .Values.jenkins.name }}-configmap"
-      volumeClaimTemplates:
-        - "{{ .Values.jenkins.name }}-vol"
+  volumeClaimTemplates:
+    - metadata:
+        name: "{{ .Values.jenkins.name }}-vol"
+        labels:
+          chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+          release: {{ .Release.Name }}
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.jenkins.persistence.size }}

@@ -3,6 +3,12 @@ pipeline {
     stages {
         stage('Checkout'){
             steps {
+                githubNotify(
+                    context: 'cit/pipeline',
+                    description: 'RE Jenkins CI',
+                    status: 'PENDING',
+                    credentialsId: 'github_account_rpc_jenkins_svc',
+                )
                 checkout scm
             }
         }
@@ -16,7 +22,6 @@ pipeline {
                 // creates DOCKER_HUB_CREDENTIALS_USR
                 // and DOCKER_HUB_CREDENTIALS_PSW
                 DOCKER_HUB_CREDENTIALS=credentials('dockerhubrpcjirasvc')
-                version="0.0.2"
             }
             steps {
                 sh """
@@ -24,6 +29,26 @@ pipeline {
                     docker login -p "${DOCKER_HUB_CREDENTIALS_PSW}" -u "${DOCKER_HUB_CREDENTIALS_USR}"
                     ./publish-image.sh
                 """
+            }
+        }
+        stage('Cleanup'){
+            steps{
+                githubNotify(
+                    context: 'cit/pipeline',
+                    description: 'RE Jenkins CI',
+                    status: 'SUCCESS',
+                    credentialsId: 'github_account_rpc_jenkins_svc',
+                )
+            }
+        }
+        post {
+            failure {
+                githubNotify(
+                    context: 'cit/pipeline',
+                    description: 'RE Jenkins CI',
+                    status: 'FAILURE',
+                    credentialsId: 'github_account_rpc_jenkins_svc',
+                )
             }
         }
     }
