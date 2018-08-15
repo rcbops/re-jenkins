@@ -15,8 +15,9 @@ spec:
     context: {{ .Values.global.context | quote }}
     chart: {{ .Chart.Name | quote }}
   ports:
-  - port: {{ .Values.jenkins.network.port }}
-    name: {{ .Values.jenkins.network.protocol | quote }}
-    targetPort: {{ .Values.jenkins.network.targetPort }}
-#  externalIPs:
-#    - 192.168.99.100
+    - name: web
+      port: {{ .Values.jenkins.network.web.port }}
+      targetPort: {{ .Values.jenkins.network.web.targetPort }}
+    - name: slave
+      port: {{ .Values.jenkins.network.slave.port }}
+      targetPort: {{ .Values.jenkins.network.slave.targetPort }}
