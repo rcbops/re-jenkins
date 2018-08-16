@@ -41,15 +41,15 @@ pipeline {
                 )
             }
         }
-        post {
-            failure {
-                githubNotify(
-                    context: 'cit/pipeline',
-                    description: 'RE Jenkins CI',
-                    status: 'FAILURE',
-                    credentialsId: 'github_account_rpc_jenkins_svc',
-                )
-            }
+    }
+    post {
+        failure {
+            githubNotify(
+                context: 'cit/pipeline',
+                description: 'RE Jenkins CI',
+                status: 'FAILURE',
+                credentialsId: 'github_account_rpc_jenkins_svc',
+            )
         }
     }
 }
