@@ -43,7 +43,7 @@ decrypt_secrets(){
     [[ -f ${CLEAR_SECRETS_FILE} ]] && die "unencrypted secrets file (${CLEAR_SECRETS_FILE}) found, please remove before decrypting"
     gpg -d ${ENC_SECRETS_FILE} > ${CLEAR_SECRETS_FILE}
   popd >/dev/null
-  log "${ENC_SECRETS_FILE} decrtyped to ${CLEAR_SECRETS_FILE}"
+  log "${ENC_SECRETS_FILE} decrypted to ${CLEAR_SECRETS_FILE}"
 }
 
 encrypt_secrets(){

@@ -15,35 +15,19 @@ set -u # fail on unset
 #shopt -s nullglob
 
 ###############################################################################
-# A couple of custom color definitions and logger functions.
+# A couple of custom color definitions along with logger and utility functions.
 ###############################################################################
-if [[ -f scripts/colors.sh ]]; then
-    source scripts/colors.sh
-else
-    echo "Unable to read scripts/colors.sh."
-    exit 1
-fi
-if [[ -f scripts/logger.sh ]]; then
-    source scripts/logger.sh
-else
-    echo "Unable to read scripts/logger.sh."
-    exit 1
-fi
-if [[ -f scripts/utils.sh ]]; then
-    source scripts/utils.sh
-else
-    echo "Unable to read scripts/utils.sh."
-    exit 1
-fi
+SCRIPTS_DIR="$(git rev-parse --show-toplevel)/scripts"
+for i in colors utils logger; do . ${SCRIPTS_DIR}/${i}.sh; done
 
 ###############################################################################
 # Load the docker tag and version info
 ###############################################################################
-declare -r docker_tag_file="versions.sh"
-if [[ -f ${docker_tag_file} ]]; then
-    source ${docker_tag_file}
+declare -r versions_file="versions.sh"
+if [[ -f ${versions_file} ]]; then
+    source ${versions_file}
 else
-    die "Unable to read ${_Y}${docker_tag_file}{$_W} file."
+    die "Unable to read ${_Y}${versions_file}{$_W} file."
 fi
 
 # Create a Jenkins work folder and place the logging.properties file there

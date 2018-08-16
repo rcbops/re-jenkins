@@ -71,8 +71,9 @@ the `run.sh` script:
 For OpenShift, it seems you need to specify an Image Stream to load images from external sources.  To create the Image
 Stream, [log into the OpenShift Console](https://rsi.rackspace.net/console) then from the menu, select 
 "Add To Project" -> "Deploy Image". Select the Image Name radio button and fill out the remote image tag details, such
-as `dealako/re-jenkins:0.0.2`. Press the search button beside the image name to fetch the meta-data.  Review the meta-
-data, add any environment variables, add any other labels or tags, and press "Create".
+as `docker-registry-default.devapps.rsi.rackspace.net/rpc-re/re-jenkins:0.0.4`. Press the search button beside the image
+name to fetch the meta-data.  Review the meta-data, add any environment variables, add any other labels or tags, and 
+press "Create".
 
 ## Deploying to OpenShift
 
@@ -126,5 +127,7 @@ so that future releases of the Jenkins master will be driven by code changes.
 
 ## TODO
 
-* Upgrade Jenkins from version 2.107.1 to version 2.121.2
-* Setup security
+* Setup users/security, LDAP
+* Setup VPN
+* Add additional tools
+* Configure plugins

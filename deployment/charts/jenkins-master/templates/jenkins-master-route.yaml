@@ -4,15 +4,19 @@ kind: Route
 metadata:
   name: {{ .Values.jenkins.name | quote }}
   labels:
-    component: {{ .Values.jenkins.name | quote }}
-    context: {{ .Values.global.context | quote }}
-    chart: {{ .Chart.Name | quote }}
-    version: {{ .Chart.Version | replace "+" "_" | trunc 63  | quote }}
-    release: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Values.jenkins.name | quote }}
+    app.kubernetes.io/context: {{ .Values.global.context | quote }}
+    app.kubernetes.io/chart: {{ .Chart.Name | quote }}
+    app.kubernetes.io/version: {{ .Chart.Version | replace "+" "_" | trunc 63  | quote }}
+    app.kubernetes.io/component: {{ .Values.jenkins.name | quote }}
+    app.kubernetes.io/part-of: "jenkins"
+    app.kubernetes.io/managed-by: "helm"
     expose: "public"
 spec:
   host: "{{ .Values.jenkins.name }}.devapps.rsi.rackspace.net"
   path: "/"
+  port:
+    targetPort: {{ .Values.jenkins.network.web.port }}
   tls:
     insecureEdgeTerminationPolicy: Redirect
     termination: edge
