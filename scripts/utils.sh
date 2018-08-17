@@ -18,6 +18,27 @@ get_logger_timestamp() {
 
 
 ###############################################################################
+# Helm Docker
+# Check if helm is available, if not, run it from docker.
+###############################################################################
+helm_docker(){
+    if which helm > /dev/null
+    then
+      log_debug "Using local helm to execute ${@}"
+      helm $@
+    else
+      log_debug "Using helm from docker to execute ${@}"
+      [[ -n $WORKSPACE ]] || die "Workspace not defined, running outside Jenkins?"
+      export HELM_HOME="${WORKSPACE}/.helm"
+      sudo docker run \
+          -v $WORKSPACE:$WORKSPACE \
+          -w $WORKSPACE \
+          -e HELM_HOME="${HELM_HOME}" \
+          "lachlanevenson/k8s-helm" $@
+    fi
+}
+
+###############################################################################
 # Functions for handling secrets
 ###############################################################################
 export KEY_ID="A08C1137033A80B12016F29B958EC98E276DF75E"

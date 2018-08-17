@@ -1,9 +1,18 @@
 pipeline {
-    agent any
+    agent {
+        node {
+            label "pubcloud_multiuse"
+        }
+    }
     stages {
         stage('Checkout'){
             steps {
                 checkout scm
+            }
+        }
+        stage('Lint'){
+            steps {
+                sh "./lint.sh"
             }
         }
         stage('Build Docker Image') {
