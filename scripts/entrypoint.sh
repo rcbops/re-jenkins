@@ -34,6 +34,14 @@ echo "Test writing ${tf}"
 date > ${tf}
 echo "Test reading ${tf}"
 cat ${tf}
+echo "lvm info:"
+lvs
+pvs
+vgs
+echo "Hosts:"
+cat /etc/hosts
+echo "resolv.conf:"
+cat /etc/resolv.conf
 
 # Now launch Jenkins (see jenkinsci/docker)
 /sbin/tini -s -- /usr/local/bin/jenkins.sh
