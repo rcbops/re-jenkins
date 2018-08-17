@@ -3,12 +3,6 @@ pipeline {
     stages {
         stage('Checkout'){
             steps {
-                githubNotify(
-                    context: 'cit/pipeline',
-                    description: 'RE Jenkins CI',
-                    status: 'PENDING',
-                    credentialsId: 'github_account_rpc_jenkins_svc',
-                )
                 checkout scm
             }
         }
@@ -18,6 +12,10 @@ pipeline {
             }
         }
         stage('Publish Docker Image') {
+            when {
+                // only publish on merge to master
+                expression { env.BRANCH_NAME == "master" }
+            }
             environment {
                 // creates DOCKER_HUB_CREDENTIALS_USR
                 // and DOCKER_HUB_CREDENTIALS_PSW
@@ -30,26 +28,6 @@ pipeline {
                     ./publish-image.sh
                 """
             }
-        }
-        stage('Cleanup'){
-            steps{
-                githubNotify(
-                    context: 'cit/pipeline',
-                    description: 'RE Jenkins CI',
-                    status: 'SUCCESS',
-                    credentialsId: 'github_account_rpc_jenkins_svc',
-                )
-            }
-        }
-    }
-    post {
-        failure {
-            githubNotify(
-                context: 'cit/pipeline',
-                description: 'RE Jenkins CI',
-                status: 'FAILURE',
-                credentialsId: 'github_account_rpc_jenkins_svc',
-            )
         }
     }
 }
