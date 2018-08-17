@@ -15,31 +15,26 @@ set -u # fail on unset
 #shopt -s nullglob
 
 ###############################################################################
-# A couple of custom color definitions and logger functions.
+# A couple of custom color definitions along with logger and utility functions.
 ###############################################################################
-if [[ -f scripts/colors.sh ]]; then
-    source scripts/colors.sh
+SCRIPTS_DIR="$(git rev-parse --show-toplevel)/scripts"
+for i in colors utils logger; do . ${SCRIPTS_DIR}/${i}.sh; done
+
+###############################################################################
+# Load the docker tag and version info
+###############################################################################
+declare -r versions_file="versions.sh"
+if [[ -f ${versions_file} ]]; then
+    source ${versions_file}
 else
-    echo "Unable to read scripts/colors.sh."
-    exit 1
-fi
-if [[ -f scripts/logger.sh ]]; then
-    source scripts/logger.sh
-else
-    echo "Unable to read scripts/logger.sh."
-    exit 1
-fi
-if [[ -f scripts/utils.sh ]]; then
-    source scripts/utils.sh
-else
-    echo "Unable to read scripts/utils.sh."
-    exit 1
+    die "Unable to read ${_Y}${versions_file}{$_W} file."
 fi
 
 ###############################################################################
 # Make sure the plugins file exists and we can load it
 ###############################################################################
-declare -r plugin_file="plugins/plugins.txt"
+PLUGINS_DIR="$(git rev-parse --show-toplevel)/plugins"
+declare -r plugin_file="${PLUGINS_DIR}/plugins.txt"
 #declare -r plugin_file="plugins/plugins-test.txt"
 if [[ -f ${plugin_file} ]]; then
     log "Using plugins file: ${_Y}${plugin_file}${_W}..."

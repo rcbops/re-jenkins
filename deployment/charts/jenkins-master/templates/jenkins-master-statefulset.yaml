@@ -1,0 +1,87 @@
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: {{ default "jenkins-master" .Values.jenkins.name | quote }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.jenkins.name | quote }}
+    app.kubernetes.io/context: {{ .Values.global.context | quote }}
+    app.kubernetes.io/chart: {{ .Chart.Name | quote }}
+    app.kubernetes.io/version: {{ .Chart.Version | replace "+" "_" | trunc 63  | quote }}
+    app.kubernetes.io/component: {{ .Values.jenkins.name | quote }}
+    app.kubernetes.io/part-of: "jenkins"
+    app.kubernetes.io/managed-by: "helm"
+spec:
+  serviceName: {{ default "jenkins-master" .Values.jenkins.name | quote }}
+  replicas: {{ default 1 .Values.jenkins.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.jenkins.name | quote }}
+      app.kubernetes.io/context: {{ .Values.global.context | quote }}
+      app.kubernetes.io/chart: {{ .Chart.Name | quote }}
+      app.kubernetes.io/component: {{ .Values.jenkins.name | quote }}
+      app.kubernetes.io/part-of: "jenkins"
+      app.kubernetes.io/managed-by: "helm"
+  template:
+    metadata:
+      name: {{ .Values.jenkins.name | quote }}
+      labels:
+        app.kubernetes.io/name: {{ .Values.jenkins.name | quote }}
+        app.kubernetes.io/context: {{ .Values.global.context | quote }}
+        app.kubernetes.io/chart: {{ .Chart.Name | quote }}
+        app.kubernetes.io/version: {{ .Chart.Version | replace "+" "_" | trunc 63  | quote }}
+        app.kubernetes.io/component: {{ .Values.jenkins.name | quote }}
+        app.kubernetes.io/part-of: "jenkins"
+        app.kubernetes.io/managed-by: "helm"
+      annotations:
+    spec:
+# Doesn't start - because it runs as root??
+#      initContainers:
+#        - name: volume-permissions
+#          image: busybox
+#          command: ['sh', '-c', 'chmod -R ug+rwx /usr/share/jenkins /var/jenkins_home']
+#          volumeMounts:
+#          - name: nginx-data
+#            mountPath: /bitnami
+      imagePullSecrets:
+        - name: "docker-registry-deal"
+      containers:
+        - name: {{ .Values.jenkins.name | quote }}
+          image: "{{ .Values.global.imageRegistry }}/{{ .Values.global.namespace }}/{{ .Values.jenkins.image }}:{{ .Values.jenkins.imageVersion }}"
+          imagePullPolicy: {{ .Values.jenkins.pullPolicy | quote }}
+          env:
+            - name: JENKINS_ARGS
+              value: {{ .Values.jenkins.env.jenkinsArgs | quote }}
+            - name: JAVA_OPTS
+              value: {{ .Values.jenkins.env.javaOpts | quote }}
+          ports:
+            - containerPort: {{ .Values.jenkins.network.web.targetPort }}
+          resources:
+            requests:
+              cpu: {{ .Values.jenkins.resources.requests.cpu | quote }}
+              memory: {{ .Values.jenkins.resources.requests.memory | quote }}
+            limits:
+              cpu: {{ .Values.jenkins.resources.limits.cpu | quote }}
+              memory: {{ .Values.jenkins.resources.limits.memory | quote }}
+#          volumeMounts:
+#            - name: "{{ .Values.jenkins.name }}-vol-work"
+#              mountPath: {{ .Values.jenkins.persistence.dir | quote }}
+#            - name: "{{ .Values.jenkins.name }}-vol-config"
+#              mountPath: {{ .Values.jenkins.plugin.configDir | quote }}
+#      volumes:
+#        - name: "{{ .Values.jenkins.name }}-vol-config"
+#          configMap:
+#            name: "{{ .Values.jenkins.name }}-configmap"
+#        - name: "{{ .Values.jenkins.name }}-vol-work"
+#          persistentVolumeClaim:
+#            claimName: "{{ .Values.jenkins.name }}-pvc-work"
+#  volumeClaimTemplates:
+#    - metadata:
+#        name: "{{ .Values.jenkins.name }}-vol-work"
+#      spec:
+#        accessModes:
+#          - ReadWriteOnce
+#        resources:
+#          requests:
+            storage: {{ .Values.jenkins.persistence.size | quote }}
+#        storageClassName: rbd
