@@ -12,7 +12,7 @@ global:
 jenkins:
   name: "jenkins-master"
   image: "re-jenkins"
-  imageVersion: "0.0.4"
+  imageVersion: "0.0.5"
   pullPolicy: "Always"
   replicas: 1
   resources:
@@ -58,4 +58,3 @@ jenkins:
         clientCacheSize: 20
       hookSecretConfig:
         credentialsId: "github_webhook_shared_secret"
-

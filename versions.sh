@@ -14,5 +14,5 @@ declare -r namespace="rpc-re"
 # The docker tag details
 declare -r owner="${owner:-rcbops}"
 declare -r project="${project:-re-jenkins}"
-declare -r version="${version:-0.0.4}"
+declare -r version="${version:-0.0.5}"
 declare -r tag="${owner}/${project}:${version}"
