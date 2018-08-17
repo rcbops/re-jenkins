@@ -17,7 +17,7 @@ id
 
 for i in /usr/share/jenkins /var/jenkins_home; do
   echo "Directory permissions for: ${i}"
-  ls -la ${i}
+  ls -lad ${i}
 done
 
 echo "CPUs:"
@@ -25,6 +25,15 @@ cat /proc/cpuinfo | grep processor | wc -l
 
 echo "Memory:"
 cat /proc/meminfo | head -1
+
+echo "Mounts:"
+mount
+
+tf="/var/jenkins_home/tf"
+echo "Test writing ${tf}"
+date > ${tf}
+echo "Test reading ${tf}"
+cat ${tf}
 
 # Now launch Jenkins (see jenkinsci/docker)
 /sbin/tini -s -- /usr/local/bin/jenkins.sh
