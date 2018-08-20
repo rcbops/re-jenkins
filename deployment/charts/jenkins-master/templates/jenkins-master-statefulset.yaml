@@ -52,7 +52,7 @@ spec:
           env:
             - name: JENKINS_ARGS
               value: {{ .Values.jenkins.env.jenkinsArgs | quote }}
-            - name: JAVA_OPTS
+            - name: JENKINS_JAVA_OVERRIDES
               value: {{ .Values.jenkins.env.javaOpts | quote }}
           ports:
             - containerPort: {{ .Values.jenkins.network.web.targetPort }}
@@ -83,5 +83,5 @@ spec:
 #          - ReadWriteOnce
 #        resources:
 #          requests:
-            storage: {{ .Values.jenkins.persistence.size | quote }}
+#            storage: {{ .Values.jenkins.persistence.size | quote }}
 #        storageClassName: rbd
