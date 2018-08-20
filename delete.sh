@@ -63,14 +63,26 @@ function cleanup-jenkins-master() {
     log "Deleting secret ${_Y}${secret_resource_name}${_W}..."
     oc -n ${namespace} delete secret ${secret_resource_name}
 
+    # TODO: DAD - fix this so that we can have the options in any order, currently it has to be in the correct order for both the options to work (--all --force)
+    # probably need either some boolean logic or break down and use 
+
     # If we have the --all flag, then delete/cleanup all the helm deployments
     if [[ $# -ge 1 ]] && [[ ${1} == "--all" ]]; then
+        shift
         for i in `helm list --namespace rpc-re | grep -v NAME | awk '{print $1}'`; do
             log "Deleting ${_Y}${i}${_W}...";
             helm delete --purge ${i};
         done
     else
         log "${_C}Hint${_W}: Use the ${_Y}--all${_W} flag to remove all helm charts from the ${_Y}${namespace}${_W} namespace."
+    fi
+
+    # if we have the --force flag, try to force delete
+    if [[ $# -ge 1 ]] && [[ ${1} == "--force" ]]; then
+        for i in statefulsets configmap service routes pods pvc; do
+            log "Deleting ${_Y}${i}${_W} via ${_R}--force${_W}..."
+            oc -n ${namespace} delete ${i} -l "app.kubernetes.io/component=${project},app.kubernetes.io/context=${context}" --force=true --grace-period=1
+        done
     fi
 }
 
