@@ -30,6 +30,12 @@ else
     die "Unable to read ${_Y}${versions_file}{$_W} file."
 fi
 
+# Check for registry login
+grep -q $registry ~/.docker/config.json || die "Not logged into docker registry. For openshift registry try: docker login -u $(oc whoami) -p \"$(oc whoami -t)\" docker-registry-default.devapps.rsi.rackspace.net/rcbops/re-jenkins"
+
+# Our build tag without version
+build_tag="${registry}/${namespace}/${project}"
+
 # Create a Jenkins work folder and place the logging.properties file there
 mkdir -p work/.ssh
 cp ~/.ssh/openstack_* work/.ssh/
@@ -38,8 +44,7 @@ cp ~/.ssh/openstack_* work/.ssh/
 declare -r container_name="jenkins-master"
 
 # Launch!
-log "Starting docker image ${_Y}${tag}${_W} with container name ${_Y}${container_name}${_W}..."
-# -Djenkins.install.runSetupWizard=false
+log "Starting docker image ${_Y}${build_tag}:${version}${_W} with container name ${_Y}${container_name}${_W}..."
 
 docker run \
     --name ${container_name} \
@@ -47,6 +52,6 @@ docker run \
     -p 8080:8080 \
     -p 50000:50000 \
     --env JENKINS_ARGS="--prefix=/jenkins" \
-    --env JAVA_OPTS="-Dhudson.footerURL=http://www.rackspace.com -Djava.awt.headless=true -Djava.util.logging.config.file=/var/jenkins_home/logging.properties" \
+    --env JENKINS_JAVA_OVERRIDES="-Dhudson.footerURL=http://www.rackspace.com -Djava.awt.headless=true -Djava.util.logging.config.file=/var/lib/jenkins/logging.properties" \
     -v `pwd`/work:/var/jenkins_home \
-    ${tag}
+    ${build_tag}:${version}
