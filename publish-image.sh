@@ -31,7 +31,7 @@ else
 fi
 
 # Check for registry login
-grep $registry ~/.docker/config.json || die "Not logged into docker registry. For openshift registry try: docker login -u $(oc whoami) -p \"$(oc whoami -t)\" docker-registry-default.devapps.rsi.rackspace.net/rcbops/re-jenkins"
+grep -q ${registry} ~/.docker/config.json || die "Not logged into docker registry. For openshift registry try: docker login -u $(oc whoami) -p \"$(oc whoami -t)\" docker-registry-default.devapps.rsi.rackspace.net/rcbops/re-jenkins"
 
 # Our build tag without version
 build_tag="${registry}/${namespace}/${project}"

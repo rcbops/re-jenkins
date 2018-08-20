@@ -30,7 +30,7 @@ save some time if you are adding/shuffling around plugins.
 
 ## Docker Image
 
-The Release Engineering team Jenkins image is based on the 
+The Release Engineering team Jenkins image is based on the
 [official Jenkins image](https://github.com/jenkinsci/docker/blob/master/Dockerfile-alpine) which is based on Alpine OS.
 
 ## Manual Image Building
@@ -69,10 +69,10 @@ the `run.sh` script:
 ## Deploy Image to OpenShift
 
 For OpenShift, it seems you need to specify an Image Stream to load images from external sources.  To create the Image
-Stream, [log into the OpenShift Console](https://rsi.rackspace.net/console) then from the menu, select 
+Stream, [log into the OpenShift Console](https://rsi.rackspace.net/console) then from the menu, select
 "Add To Project" -> "Deploy Image". Select the Image Name radio button and fill out the remote image tag details, such
-as `docker-registry-default.devapps.rsi.rackspace.net/rpc-re/re-jenkins:0.0.4`. Press the search button beside the image
-name to fetch the meta-data.  Review the meta-data, add any environment variables, add any other labels or tags, and 
+as `docker-registry-default.devapps.rsi.rackspace.net/rpc-re/re-jenkins:0.0.6`. Press the search button beside the image
+name to fetch the meta-data.  Review the meta-data, add any environment variables, add any other labels or tags, and
 press "Create".
 
 ## Deploying to OpenShift

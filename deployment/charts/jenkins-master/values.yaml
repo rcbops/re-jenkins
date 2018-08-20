@@ -39,12 +39,12 @@ jenkins:
         probeTimeoutSeconds: 60
   env:
     jenkinsArgs: "--prefix=/jenkins"
-    javaOpts: "-Xmx2g -Xmx2g -Dhudson.footerURL=\"http://www.rackspace.com\" -Djava.awt.headless=true -Djava.util.logging.config.file=\"/var/jenkins_home/logging.properties\""
+    javaOpts: "-Xmx2g -Xmx2g -Dhudson.footerURL=\"http://www.rackspace.com\" -Djava.awt.headless=true -Djava.util.logging.config.file=\"/var/lib/jenkins/logging.properties\""
   persistence:
     enabled: true
     storageClass: "fast-data-volume"
     size: "5Gi"
-    dir: "/var/jenkins_home"
+    dir: "/var/lib/jenkins"
   plugin:
     configDir: "/usr/share/jenkins/ref/"
     jenkinsLocation:

@@ -57,7 +57,7 @@ metadata:
     app.kubernetes.io/name: "jenkins-master"
     app.kubernetes.io/context: "re"
     app.kubernetes.io/chart: "jenkins-master"
-    app.kubernetes.io/version: "0.0.4"
+    app.kubernetes.io/version: "0.0.6"
     app.kubernetes.io/component: "jenkins-master"
     app.kubernetes.io/part-of: "jenkins"
     app.kubernetes.io/managed-by: "helm"
